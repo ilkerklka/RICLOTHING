@@ -1,0 +1,55 @@
+@media (max-width: 991.98px) {
+    .girisyapfoto img{
+        
+    }
+}
+
+
+.girisyapform{
+    background-color: white;
+    padding: 30px;
+    border-radius: 18px;
+    margin-top: 70px;
+}
+
+.girisyapfoto img{
+   display: block;
+   margin: auto;
+}
+
+.kayıt a{
+    color: black;
+    font-style: italic;
+    text-decoration: solid;
+}
+
+.kayıt a:hover{
+    color: rgb(54, 54, 54);
+    font-style: italic;
+    text-decoration: none;
+    transition: 0.5s;
+    
+}
+
+input[type="radio"]{
+    display: none;
+}
+
+
+.cinsiyet label{
+    position: relative;
+    border: 2px solid rgb(138, 138, 138);
+    border-radius: 5px;
+    padding: 8px;
+    margin: 1px;
+    font-size: 15px;
+    width: 100px;
+    text-align: center;
+    color: rgb(138, 138, 138) ;
+}
+
+input[type="radio"]:checked+label{
+    border: 2px solid rgb(36, 35, 35);
+    color: rgb(36, 35, 35);
+    transition: 0.3s;
+}
