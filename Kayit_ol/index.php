@@ -1,3 +1,8 @@
+
+<?php
+include ("../adminpanel/connect.php")
+?>
+
 <!DOCTYPE html>
 <html lang="tr">
 <head>
@@ -32,36 +37,94 @@
             </div>
             <div class="  col-lg-6 col-md-12 mb-4 mb-md-0 girisyapfoto animate__animated animate__fadeInDown"> 
                 <img src="../Fotograflar/RICLOTHING.png"  width="180" height="80" alt="">
-    <form class="girisyapform  ">
+    <form class="girisyapform  " name="contactForm" method="POST">
+    <?php
+    $Ad = @$_POST["Ad"];
+    $Soyad = @$_POST["Soyad"];
+    $DogumTarih = @$_POST["DogumTarih"];
+    $Mail = @$_POST["Mail"];
+    $cinsiyet = @$_POST["cinsiyet"];
+    $Sifre = @$_POST["Sifre"];
+
+    //  if ($Ad and $Soyad and $DogumTarih and $Mail and $cinsiyet and $Sifre) {
+    //      echo 'bu kısımda problem yok';
+    //  }
+
+
+    $MailSorgusu = $baglan->prepare("select * from kullanicilar where mail = ? LIMIT 1");
+    $MailSorgusu->execute([$Mail]);
+    $MailSorguSayisi = $MailSorgusu->rowCount();
+
+    if ($MailSorguSayisi > 0) {
+        echo '<div class="alert alert-danger" >Girmiş Olduğunuz E-mail Zaten mevcut</div>';
+    }else{
+
+    $save = $baglan->prepare("insert into kullanicilar set
+    
+    isim =:Ad,
+    soyisim =:Soyad,
+    dogumtarih =:DogumTarih,
+    mail =:Mail,
+    cinsiyet =:cinsiyet,
+    sifre =:sifre
+    ");
+
+    //  if ($save) {
+    //      echo 'bu kısım sorunsuz';
+    // }
+
+    $insert =  $save->execute(array(
+        "Ad" => $Ad,
+        "Soyad" =>$Soyad,
+        "DogumTarih" =>$DogumTarih,
+        "Mail" =>$Mail,
+        "cinsiyet" =>$cinsiyet,
+        "sifre" =>$Sifre
+    ));
+
+    
+    
+if ($insert) {
+    echo '<div class= "alert alert-success">Kayıdınız Oluşturuldu , giriş bölümüne yönlendiriliyorsunuz...</div>';
+    header("refresh:2 ,url=../giris_yap");
+}else{
+ 
+}
+    
+   
+
+
+}
+?>
         <div class="mb-3">
             <label for="exampleInputText1" class="form-label">Adınız</label>
-            <input type="text" class="form-control" id="isim" required>
+            <input type="text" name="Ad" class="form-control" id="isim" required>
         </div>
         <div class="mb-3">
             <label for="exampleInputText2" class="form-label">Soyadınız</label>
-            <input type="text" class="form-control" id="soyisim" required>
+            <input type="text" name="Soyad" class="form-control" id="soyisim" required>
         </div>
         <div class="mb-3">
             <label for="exampleInputText3" class="form-label">Doğum Tarihiniz</label>
-            <input type="date" class="form-control" id="DogumTarihi" required>
+            <input type="date" name="DogumTarih" class="form-control" id="DogumTarihi" required>
         </div>
         <div class="mb-3 ">
           <label for="exampleInputEmail1" class="form-label">Mail Adresiniz</label>
-          <input type="email" class="form-control" id="Mail" aria-describedby="emailHelp" required>
+          <input type="email" name="Mail" class="form-control" id="Mail" aria-describedby="emailHelp" required>
         </div>
         
         <div class="mb-3  ">
             <label for="exampleInputCinsiyet1" class="form-label">Cinsiyetiniz</label> <br>
             <div class="container cinsiyet">
-            <input type="radio"  name="erkek" id="erkek">
+            <input type="radio"  name="cinsiyet" value="erkek" id="erkek">
             <label for="erkek" class="form-label">Erkek</label>
-            <input type="radio"  name="erkek" id="kadın">
+            <input type="radio"  name="cinsiyet" value="kadın" id="kadın">
             <label for="kadın" class="form-label">Kadın</label>
         </div>
           </div>
         <div class="mb-3">
           <label for="exampleInputPassword1" class="form-label">Şifre</label>
-          <input type="password" class="form-control" id="Sifre" required>
+          <input type="password" name="Sifre" class="form-control" id="Sifre" required>
         </div>
         
         <button type="submit" class="btn btn-dark">Kayıt Ol</button> <br>
@@ -69,6 +132,13 @@
       </form>
             </div>
         </div>
-    </div>        
+    </div>  
+    
+    
+
+
+    
+
 </body>
 </html>
+

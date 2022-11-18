@@ -1,3 +1,9 @@
+<?php
+include("../adminpanel/connect.php")
+
+?>
+
+
 <!DOCTYPE html>
 <html lang="tr">
 <head>
@@ -32,14 +38,38 @@
             </div>
             <div class="  col-lg-6 col-md-12 mb-4 mb-md-0 girisyapfoto animate__animated animate__fadeInDown"> 
                 <img src="../Fotograflar/RICLOTHING.png"  width="180" height="80" alt="">
-    <form class="girisyapform  ">
+    <form method="POST" class="girisyapform  ">
+      <?php
+      if ($_POST){
+        $Mail = $_POST['mail2'];
+        $sifre = $_POST['sifre2'];
+
+
+        if ($Mail != ""  and $sifre != "") {
+          $KullaniciKontrol = $baglan->prepare("SELECT * FROM kullanicilar WHERE mail = ? and sifre = ?");
+          $KullaniciKontrol->execute([$Mail, $sifre]);
+          $KullaniciKontrolSayisi = $KullaniciKontrol->rowCount();
+
+          if ($KullaniciKontrolSayisi > 0) {
+            
+            $_SESSION['kullanici']=$Mail;
+            echo '<div class=" alert alert-success" >Giriş işlemi başarılı</div>';
+            header("refresh:2 ,url=../index.php");
+          }else {
+            echo '<div class=" alert alert-danger" >Bu bilgilere sahip kullanıcı bulunmamakta</div>';
+          }
+        }else {
+          echo '<div class=" alert alert-danger" >Lütfen Boş geçmeyiniz</div>';
+        }
+      }
+      ?>
         <div class="mb-3 ">
           <label for="exampleInputEmail1" class="form-label">Mail Adresiniz</label>
-          <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" required>
+          <input type="email" name="mail2" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" >
         </div>
         <div class="mb-3">
           <label for="exampleInputPassword1" class="form-label">Şifre</label>
-          <input type="password" class="form-control" id="exampleInputPassword1" required>
+          <input type="password" name="sifre2" class="form-control" id="exampleInputPassword1" >
         </div>
         <div class="mb-3 form-check">
           <input type="checkbox" class="form-check-input" id="exampleCheck1">
