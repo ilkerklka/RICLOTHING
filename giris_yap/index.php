@@ -1,5 +1,7 @@
 <?php
-include("../adminpanel/connect.php")
+@session_start();
+include("../adminpanel/connect.php");
+  
 
 ?>
 
@@ -52,7 +54,7 @@ include("../adminpanel/connect.php")
 
           if ($KullaniciKontrolSayisi > 0) {
             
-            $_SESSION['kullanici']=$Mail;
+            $_SESSION['giris'] = $Mail ;
             echo '<div class=" alert alert-success" >Giriş işlemi başarılı</div>';
             header("refresh:2 ,url=../index.php");
           }else {

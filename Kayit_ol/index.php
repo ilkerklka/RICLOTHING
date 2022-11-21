@@ -116,9 +116,9 @@ if ($insert) {
         <div class="mb-3  ">
             <label for="exampleInputCinsiyet1" class="form-label">Cinsiyetiniz</label> <br>
             <div class="container cinsiyet">
-            <input type="radio"  name="cinsiyet" value="erkek" id="erkek">
+            <input type="radio"  name="cinsiyet" value="ERKEK" id="erkek">
             <label for="erkek" class="form-label">Erkek</label>
-            <input type="radio"  name="cinsiyet" value="kadın" id="kadın">
+            <input type="radio"  name="cinsiyet" value="KADIN" id="kadın">
             <label for="kadın" class="form-label">Kadın</label>
         </div>
           </div>
