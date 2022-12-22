@@ -26,11 +26,26 @@ if (isset($_SESSION['giris'])) {
         $kullanicimail = $kullanici['mail'];
         $kullanicicinsiyet = $kullanici['cinsiyet'];
         $kullanicisifre = $kullanici['sifre'];
+        $kullaniciid = $kullanici['id'];        
     }
 
 }
 
 
-  
+
+if (isset($_SESSION['admin'])) {
+    $adminbilgiler = $baglan->prepare("SELECT * from admin where adminuser = ? LIMIT 1");
+    $adminbilgiler->execute([$_SESSION['admin']]);
+    $adminbilgilersayisi = $adminbilgiler->rowCount();
+    $admin = $adminbilgiler->fetch(PDO::FETCH_ASSOC);
+
+    if ($adminbilgilersayisi > 0) {
+        $adminid = $admin['id'];
+        $adminisim = $admin['adminuser'];
+        $adminsifre = $admin['adminsifre'];
+        $adminlevel = $admin['adminlevel'];
+    }
+}
+
 
 ?>

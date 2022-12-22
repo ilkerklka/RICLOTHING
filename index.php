@@ -34,7 +34,7 @@ include ("header.php");
     
   <?php
   if (isset($_SESSION['giris'])) {
-   echo '<div class="alert alert-success" style="text-align:center;"> HOŞGELDİN : ' .$kullaniciadi ." " .$kullanicisoyadi .'</div>';
+   echo '<div class="alert alert-success" style="text-align:center;"> HOŞGELDİN : ' ."<b>" .$kullaniciadi ." " .$kullanicisoyadi .'</b></div>';
  }
  ?>
     <div  class="card bg-dark text-white">
