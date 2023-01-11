@@ -55,3 +55,5 @@ $('.multi-item-carousel').carousel({
 	}
 	span[1].onclick = ()=>{right_mover();}
 	span[0].onclick = ()=>{left_mover();}
+
+

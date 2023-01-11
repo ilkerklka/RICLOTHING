@@ -21,70 +21,38 @@
     <div class="collapse navbar-collapse menuduzen" id="navbarSupportedContent">
       <!-- Navbar brand -->
 
-      <a class="navbar-brand mt-2 mt-lg-0" href="#">
+      <a class="navbar-brand mt-2 mt-lg-0" href="index.php">
         <img src="Fotograflar/RICLOTHİNGbeyaz.png" height="70" alt="MDB Logo" loading="lazy" />
       </a>
       <!-- Left links -->
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <?php $urunkategori = $baglan->prepare("SELECT distinct AnaKategori From Kategoriler order by id asc");
+              $urunkategori->execute();
+              while ($urun = $urunkategori->fetch(PDO::FETCH_ASSOC)) {
+                $urunkateg = $urun['AnaKategori'];
+            ?>
         <li class="nav-item">
           <div class="menu">
-            Erkek
+            <?php echo $urun['AnaKategori']?>
             <ul class="drop">
-              <li><a href="#">Ayakkabı</a></li>
-              <li><a href="#">Giyim</a></li>
-              <li><a href="#">Aksesuarlar</a></li>
-              <li><a href="#">Spor </a></li>
+              <?php 
+
+                    $alturun = $baglan->prepare("SELECT * from Kategoriler where AnaKategori ='{$urunkateg}' ");
+                    $alturun->execute();
+                    while ($urunalt = $alturun->fetch(PDO::FETCH_ASSOC)) {
+                      # code...
+                    
+              ?>
+              <li><a href="urunlisteleme.php?id=<?php echo $urunalt['id']?>"><?php echo $urunalt['AltKategori']?></a></li>
+              <?php }?>
+
+            
               <li><a href="#" style="color: #db0000">İndirimler</a></li>
             </ul>
           </div>
         </li>
-        <li class="nav-item">
-          <div class="menu">
-            Kadın
-            <ul class="drop">
-              <li><a href="#">Ayakkabı</a></li>
-              <li><a href="#">Giyim</a></li>
-              <li><a href="#">Aksesuarlar</a></li>
-              <li><a href="#">Spor </a></li>
-              <li><a href="#" style="color: #db0000">İndirimler</a></li>
-            </ul>
-          </div>
-        </li>
-        <li class="nav-item">
-          <div class="menu">
-            Çocuk
-            <ul class="drop">
-              <li><a href="#">Genç(8-14)</a></li>
-              <li><a href="#">Çocuk(4-8)</a></li>
-              <li><a href="#">Bebek(0-4)</a></li>
-              <li><a href="#" style="color: #db0000">İndirimler</a></li>
-            </ul>
-          </div>
-        </li>
-        <li class="nav-item">
-          <div class="menu">
-            Spor
-            <ul class="drop">
-              <li><a href="#">Futbol</a></li>
-              <li><a href="#">Basketbol</a></li>
-              <li><a href="#">Koşu</a></li>
-              <li><a href="#">Training</a></li>
-              <li><a href="#">Diğer</a></li>
-              <li><a href="#" style="color: #db0000">İndirimler</a></li>
-            </ul>
-          </div>
-        </li>
-        <li class="nav-item">
-          <div class="menu">
-            Markalar
-            <ul class="drop">
-              <li><a href="#">Black&White</a></li>
-              <li><a href="#">Wint</a></li>
-              <li><a href="#">RISUM</a></li>
-              <li><a href="#">Collage</a></li>
-            </ul>
-          </div>
-        </li>
+        <?php }?>
+        
         <li class="nav-item">
           <div class="menu">
             <a style="color: #db0000"> İndirimler</a>
@@ -158,53 +126,99 @@
 if (isset($_SESSION['giris'])) {
 ?>
   <!-- SEPETİM -->
-  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
+  <div class="modal fade " id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
       <div class="modal-content">
         <div class="modal-header">
           <h1 class="modal-title fs-5" id="exampleModalLabel">Sepetim</h1>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-          <div class="card" style="width: 18rem; display: block; margin: auto; border: 1px solid #000;">
-            <img src="image/banner1.png" class="card-img-top" alt="...">
-            <div class="card-body">
-              <h5 class="card-title">Spor Ceket</h5>
-              <p class="card-text">Erkek</p>
-              <samp class="indirim">$55.00</samp>
-              <samp>$45.00</samp>
-              <div class="button">
-                <a href="#" class="btn">Ürün</a>
-              </div>
+        <div class="container">
+          <div class="row">
+            <div class="col-md-8" style="display: block; margin: auto;">
+              <table  class="table  table-hover table-bordered table-striped">
+                  <thead>
+                    <th class="text-center"> <strong> Ürün Resmi </strong></th>
+                    <th class="text-center"> <strong> Ürünü Adı </strong></th>
+                    <th class="text-center"> <strong> Fiyatı </strong></th>
+                    <th class="text-center"> <strong> Ürünü Gör </strong></th>
+                    <th class="text-center"> <strong> Sepetten Çıkar </strong></th>
+                  </thead>
+                  <tbody>
+          <?php
+          
+          $sepeturun = $baglan->prepare("SELECT * from sepet where kullaniciid = '{$kullaniciid}' ");
+          $sepeturun->execute();
+          $tutar = 0;
+          while ($row = $sepeturun->fetch(PDO::FETCH_ASSOC)) {
+           
+            
+            $sepeturunid = $row['urunid'];
+          
+            $urunbilgi = $baglan->prepare("SELECT * FROM urunler where id = '{$sepeturunid}' "); 
+          $urunbilgi->execute();
+          if ($urun =$urunbilgi->fetch(PDO::FETCH_ASSOC)) {
+              $urunid  = $urun['id'];
+              $urunadi = $urun['urunadi'];
+              $urunbilgiler = $urun['urunbilgileri'];
+              $urunkategori = $urun['urunKategorisi'];
+              $urunfoto = $urun['urunfoto2'];
+              $urunfiyat = $urun['fiyat'];
+      
+      
+          }
+          $tutar = $tutar + $urunfiyat;
+          ?>
+        
+                  
+                    <tr>
+                      <td class="text-center" width="150">
+                          <img src="image/<?php echo $urunfoto?>" width="50" alt="">
+                      </td>
+                      <td class="text-center">
+                      <?php echo $urunadi?>
+                      </td>
+                      <td class="text-center">
+                      <?php echo $urunfiyat?> TL
+                      </td>
+                      <td class="text-center">
+                      <a href="urungorunum.php?id=<?php echo $row['urunid']?>" style="color: #db0000;">Ürün</a>
+                      </td>
+                      <td class="text-center">
+                      <a  class="silmeislemi" style="color: #db0000;" href="sepetsil.php?id=<?php echo $row['id']?>"> Sil</a>
+          
+                        </td>
+
+                    </tr>
+                    <?php }?>
+                  </tbody>
+              </table>
             </div>
           </div>
-        </div>
+         </div>
         <hr>
         <div class="container sonfiyat">
           <div class="row">
             <div class="col-lg-6 col-md-12 mb-4 mb-md-0">
-              <p> <span> Fiyatı Toplamı </span> = $45.00</p>
+              <p> <span> Fiyatı Toplamı </span> = <?php echo $tutar?> TL</p>
 
 
             </div>
 
             <div class="col-lg-6 col-md-12 mb-4 mb-md-0">
-              İndirim Kodunuz Varsa :
-              <form class="indirimkodu" style="margin-bottom: 3px; padding: 5px;" action="">
-                <input type="text">
-                <button type="button" style="display: block; margin: auto;" class="btn btn-black"> Uygula</button>
-              </form>
+             
             </div>
           </div>
 
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Kapat</button>
-          <button type="button" class="btn btn-black">Alışverişi Tamamla</button>
+          <a href="odeme.php?id=<?php echo $kullaniciid?>"  type="button" class="btn btn-black">Alışverişi Tamamla</a>
         </div>
       </div>
     </div>
-  </div>
+  </div></div>
   <!-- SEPETİM -->
   <!-- GİRİŞ YAP -->
   <div class="modal fade" id="exampleModal-10000" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -234,7 +248,37 @@ if (isset($_SESSION['giris'])) {
           ?>
             <p><b><?php echo $adresyazma['adresbasligi'] ?> </b><a data-bs-toggle="modal" data-bs-target="#exampleModal-<?php echo $adresyazma['id'] ?> " href="" > Görüntüle</a></p>
 
-            <div class="modal fade" id="exampleModal-<? echo $adresyazma['id'] ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            
+
+      <?php
+          }
+      ?>
+      <a data-bs-toggle="modal" data-bs-target="#exampleModal-40000 " href="">Adres Ekle</a>
+      <hr>
+      <h2>Giriş Detayları</h2>
+      <p><?php echo $kullanicimail ?></p>
+      <p><?php echo $kullanicisifre ?></p>
+      <a data-bs-toggle="modal" data-bs-target="#exampleModal-30000 " href="">Düzenle</a>
+      <a style="float: right;" href="logout.php">Çıkış Yap</a>
+      </div>
+
+
+      <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Kapat</button>
+
+    </div>
+  </div>
+  </div>
+  </div>
+  <!-- GİRİŞ YAP -->
+  <?php
+          $adreslistele = $baglan->prepare("SELECT * from adres  where kullaniciid = ? ");
+          $adreslistele->execute([$kullaniciid]);
+
+          while ($adresyazma = $adreslistele->fetch(PDO::FETCH_ASSOC)) {
+
+           
+          ?>
+  <div class="modal fade" id="exampleModal-<?php echo $adresyazma['id'] ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
               <div class="modal-dialog">
                 <div class="modal-content">
                   <div class="modal-header">
@@ -256,7 +300,7 @@ if (isset($_SESSION['giris'])) {
                       </div>
                       <div class="mb-4 form-outline  ">
                         <label class="form-label" for="Soyisim">Adres Başlığı</label><br>
-                        <input class="" disabled name="" placeholder="<?php echo $adresyazma['adresbaslgi'] ?>" type="text"><br>
+                        <input class="" disabled name="" placeholder="<?php echo $adresyazma['adresbasligi'] ?>" type="text"><br>
                       </div>
                       <div class="form-outline mb-4">
                         <label class="form-label" for="Soyisim">Telefon Numarası</label><br>
@@ -280,7 +324,7 @@ if (isset($_SESSION['giris'])) {
                       </div>
                   </div>
                   <input class="" name="adkullaniciid" value="<?php echo "$kullaniciid" ?>" type="hidden">
-                  <button type="submit" class="btn btn-block btn-black">Güncelle </button>
+                  <button type="submit" class="btn btn-block btn-black">Sil </button>
 
                   </form>
                 </div>
@@ -294,29 +338,9 @@ if (isset($_SESSION['giris'])) {
 
               </div>
             </div>
-      
 
-      <?php
-          }
-      ?>
-      <a data-bs-toggle="modal" data-bs-target="#exampleModal-40000 " href="">Adres Ekle</a>
-      <hr>
-      <h2>Giriş Detayları</h2>
-      <p><?php echo $kullanicimail ?></p>
-      <p><?php echo $kullanicisifre ?></p>
-      <a data-bs-toggle="modal" data-bs-target="#exampleModal-30000 " href="">Düzenle</a>
-      <a style="float: right;" href="logout.php">Çıkış Yap</a>
-      </div>
-
-
-      <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Kapat</button>
-
-    </div>
-  </div>
-  </div>
-  </div>
-  <!-- GİRİŞ YAP -->
-  <!-- DETAYLAR -->
+            <?php }?>
+      <!-- DETAYLAR -->
   <div class="modal fade" id="exampleModal-20000" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
@@ -460,7 +484,7 @@ if (isset($_SESSION['giris'])) {
               <textarea class="" name="tamadres" type="text"></textarea><br>
             </div>
         </div>
-        <input class="" name="adkullaniciid" value="<?php echo "$kullaniciid" ?>" type="hidden">
+        <input class="" name="adkullaniciid" value="<?php echo $kullaniciid ?>" type="hidden">
         <input class="" name="adresekle"  type="hidden">
         <button type="submit" class="btn btn-block btn-black">Ekle </button>
 
@@ -477,6 +501,6 @@ if (isset($_SESSION['giris'])) {
     </div>
   </div>
   </div>
-  <!-- ADRES EKLE
+  <!-- ADRES EKLE -->
 
-<?php } ?>
+<?php  } ?>

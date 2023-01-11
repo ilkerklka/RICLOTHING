@@ -56,7 +56,7 @@
   <body style=" font-family: 'News Cycle', sans-serif;">
     <nav class="hakkimiznav navbar bg-white sticky-top">
       <div class="container justify-content-center">
-        <a class="navbar-brand" href="../index.html">
+        <a class="navbar-brand" href="../index.php">
           <img src="../Fotograflar/RI LOGO.png" alt="Bootstrap" width="40" />
         </a>
       </div>

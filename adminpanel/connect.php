@@ -29,6 +29,8 @@ if (isset($_SESSION['giris'])) {
         $kullaniciid = $kullanici['id'];        
     }
 
+  
+
 }
 
 

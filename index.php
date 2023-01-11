@@ -9,7 +9,9 @@
 <?php
 include ("header.php");
 
+
 ?>
+</head>
   <body  style="font-family: 'News Cycle', sans-serif;">
 <?php
  include ("navbar.php");
@@ -72,104 +74,31 @@ include ("header.php");
           </p>
       </div>
       <div class="section">
+      <?php 
+                    $formSorgu = $baglan->prepare("SELECT * FROM urunler ORDER BY id ASC");
+                    $formSorgu->execute();
+              
+                    while ($kullanici = $formSorgu->fetch(PDO::FETCH_ASSOC)) {
+                    ?>
         <div class="product">
           <picture>
-            <img src="image/banner2.png" alt="">
+            <img src="image/<?php echo $kullanici['urunfoto2']?>" alt="">
           </picture>
           <div class="detail">
             <p>
-              <b>Abiye Elbise</b><br>
-              <small>Kadın</small>
+              <b> <?php echo $kullanici['urunadi']?></b><br>
+              <small> <?php echo $kullanici['urunKategorisi']?></small>
             </p>
-            <samp>$45.00</samp>
+            <samp><?php echo $kullanici['fiyat']?>TL</samp>
           </div>
           <div class="button">
             
-            <a href="#">Ürün</a>
+            <a href="urungorunum.php?id=<?php echo $kullanici['id']?>">Ürün</a>
           </div>
         </div>
-        <div class="product">
-          <picture>
-            <img src="image/banner1.png" alt="">
-          </picture>
-          <div class="detail">
-            <p>
-              <b>Spor Ceket</b><br>
-              <small>Erkek</small>
-            </p>
-            <samp class="indirim">$55.00</samp>
-                      <samp>$45.00</samp>
-          </div>
-          <div class="button">
-          
-            <a href="#">Ürün</a>
-          </div>
-        </div>
-        <div class="product">
-          <picture>
-            <img src="image/banner3.png" alt="">
-          </picture>
-          <div class="detail">
-            <p>
-              <b>Ayakkabı</b><br>
-              <small>Spor</small>
-            </p>
-            <samp>$65.00</samp>
-          </div>
-          <div class="button">
-            
-            <a href="#">Ürün</a>
-          </div>
-        </div>
-        <div class="product">
-          <picture>
-            <img src="image/banner4.png" alt="">
-          </picture>
-          <div class="detail">
-            <p>
-              <b>Akıllı Saat</b><br>
-              <small>Teknoloji</small>
-            </p>
-            <samp>$355.00</samp>
-          </div>
-          <div class="button">
-            
-            <a href="#">Ürün</a>
-          </div>
-        </div>
-        <div class="product">
-          <picture>
-            <img src="image/watch.png" alt="">
-          </picture>
-          <div class="detail">
-            <p>
-              <b>Saat</b><br>
-              <small>Aksesuar</small>
-            </p>
-            <samp>$2555.00</samp>
-          </div>
-          <div class="button">
-          
-            <a href="#">Ürün</a>
-          </div>
-        </div>
-        <div class="product">
-          <picture>
-            <img src="image/delta.png" alt="">
-          </picture>
-          <div class="detail">
-            <p>
-              <b>Bot </b>><br>
-              <small>Ayakkabı</small>
-            </p>
-            <samp>$45.00</samp>
-          </div>
-          <div class="button">
-            
-            <a href="#">Ürün</a>
-          </div>
-        </div>
-    
+        <?php }?>
+       
+      </div>
       
              
       

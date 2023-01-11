@@ -6,6 +6,7 @@
     <title>RI CLOTHING</title>
     <meta name="robots" content="index,follow" />
     <link rel="stylesheet" href="style.css" />
+    
     <!--ANİMATE-->
     <link
       rel="stylesheet"
@@ -54,4 +55,4 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@100&family=News+Cycle&display=swap" rel="stylesheet">
-  </head>
+ 

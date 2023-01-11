@@ -34,6 +34,9 @@
           >
         </li>
         <li class="nav-item">
+          <a class="nav-link" href="kategori.php">Kategoriler</a>
+        </li>
+        <li class="nav-item">
           <a class="nav-link " href="logout.php" style="color: #DB0000;"
             >Çıkış</a
           >
@@ -50,6 +53,7 @@
             >Siparişler</a
           >
         </li>
+        <a class="nav-link" href="kategori.php">Kategoriler</a>
         <li class="nav-item">
           <a class="nav-link " href="logout.php" style="color: #DB0000;"
             >Çıkış</a
@@ -66,6 +70,7 @@
             >Siparişler</a
           >
         </li>
+        <a class="nav-link disabled" href="kategori.php">Kategoriler</a>
         <li class="nav-item">
           <a class="nav-link " href="logout.php" style="color: #DB0000;"
             >Çıkış</a

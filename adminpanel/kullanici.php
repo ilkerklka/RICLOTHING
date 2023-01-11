@@ -5,6 +5,11 @@ session_start();
 include("connect.php");
 include ("header.php");
 ?>
+<link rel="stylesheet" href="tablo/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" href="tablo/buttons.bootstrap4.min.css">
+    <link rel="stylesheet" href="tablo/responsive.bootstrap4.min.css">
+    <link rel="stylesheet" href="tablo/adminlte.min.css">
+ </head>
 <body >
 
 <?php
@@ -73,10 +78,11 @@ include("navbar.php");
         <!-- /.row -->
       </div>
       <!-- /.container-fluid -->
-    </section>
+</section>
 
     <div style="margin-left: 150px; margin-right: 150px; margin-top: 15px; margin-bottom: 15px;  ">
 <h3>Yeni Kullanıcı Oluşturma</h3>
+<hr>
     <form class="girisyapform  " name="contactForm" method="POST">
     <?php
     $Ad = @$_POST["Ad"];
@@ -126,7 +132,7 @@ include("navbar.php");
     
 if ($insert) {
     echo '<div class= "alert alert-success">Kayıt Oluşturuldu.</div>';
-    header("location:anasayfa.php");
+    echo '<meta  http-equiv="refresh"  content="2;URL=kullanici.php">';
 }else{
  
 }
@@ -178,5 +184,7 @@ include ("footer.php");
                     }
 ?>
 
+
 <script src="script.js"></script>
 </body>
+</html>
